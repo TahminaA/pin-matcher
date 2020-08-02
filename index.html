@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="pinGeneratorDisplay"class="form-control" type="text" name="text">
+                    <button id ="pinGenerator" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6 CalcBtn">
+                <div class="input-section half-width" name="form">
+                    <input class="form-control" type="text" id='display'>
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div  class="calc-button-row">
+                              <div class="button" onclick="getInput(7)">7</div>
+                              <div class="button" onclick="getInput(8)">8</div>
+                              <div class="button" onclick="getInput(9)">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" onclick="getInput(4)">4</div>
+                              <div class="button" onclick="getInput(5)">5</div>
+                              <div class="button" onclick="getInput(6)">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" onclick="getInput(1)">1</div>
+                              <div class="button" onclick="getInput(2)">2</div>
+                              <div class="button" onclick="getInput(3)"> 3</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" onclick="getInput('<')"><</div>
+                                <div class="button" onclick="getInput(0)">0</div>
+                                <div class="button" onclick="getInput('C')">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+                <p id="pinTextNotMatch" class="notify" >❌ Pin Didn't Match, Please try again</p>
+            <p id="pinTextMatch" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+
+    </div>
+    <script>
+        
+        // generate random pin number
+         const pinGeneratorBtn=document.getElementById('pinGenerator');
+         pinGeneratorBtn.addEventListener('click',function(){
+             var randomNum=Math.floor(1000 + Math.random() * 9000);
+             var output=Math.round(randomNum);
+             document.getElementById("pinGeneratorDisplay").value=output;
+            
+        })
+
+        //showing calculator keyboard number and using back-space n clear operator
+        function getInput(inputValue){
+            const value=inputValue;
+            if(value=='C'){
+                document.getElementById('display').value='';
+            }
+            else if(value=='<'){
+                const backSpace = document.getElementById("display").value;
+                document.getElementById("display").value = backSpace.substr(0, backSpace.length - 1);
+            }
+            else{
+                document.getElementById('display').value+=inputValue;
+            }
+        }
+
+     //compare two input field and enable n disable notify area
+         const submitBtn=document.getElementById('submitBtn');
+         submitBtn.addEventListener('click',function(){
+               
+                var pinGeneratorText = document.getElementById("pinGeneratorDisplay").value;
+                var calculatorText = document.getElementById("display").value;
+                
+    
+                if(pinGeneratorText==calculatorText){
+                    var pinNotMatchText=document.getElementById("pinTextNotMatch");
+                    pinTextNotMatch.style.display='none';
+                    var pinTextMatch=document.getElementById("pinTextMatch");
+                    pinTextMatch.style.display='block';
+                    
+                }
+                else{
+                    var pinTextMatch=document.getElementById("pinTextMatch");
+                    pinTextMatch.style.display='none';
+                    var pinNotMatchText=document.getElementById("pinTextNotMatch");
+                    pinTextNotMatch.style.display='block';
+                   
+                }
+            })
+
+
+       
+       
+    </script>
+</body>
+</html>
